@@ -1,11 +1,13 @@
 {
   "name": "@njkremer/backend-faker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simulate a backend service in the browser using IndexDB as the persistance layer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "npm:login": "npm login --auth-type web",
+    "npm:publish": "npm publish --access=public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,5 +24,8 @@
   "devDependencies": {
     "@types/node": "^22.13.10",
     "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "idb-keyval": "^6.2.1"
   }
 }
