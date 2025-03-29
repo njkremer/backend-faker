@@ -1,6 +1,6 @@
 {
   "name": "@njkremer/backend-faker",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "description": "Simulate a backend service in the browser using IndexDB as the persistance layer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
