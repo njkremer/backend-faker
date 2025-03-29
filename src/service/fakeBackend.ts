@@ -186,9 +186,9 @@ const deleteEntity = async <T extends FakeEntity>(path: string) => {
   await set(entityName, entitiesWithItemDeleted);
 }
 
-export const fakeBackend = {
-  get: getOne,
+export {
+  getOne as get,
   getMany,
   post,
-  delete: deleteEntity
+  deleteEntity as delete
 }
