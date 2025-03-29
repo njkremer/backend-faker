@@ -2,8 +2,14 @@ import { FakeEntity } from "../types"
 import { get, set } from 'idb-keyval';
 import { trim } from "../utils/utils";
 
-const parsePath = (path: string) => {
+const splitPath = (path: string) => {
   const pathParts = path.split('/');
+
+  return pathParts.filter(x => !!x);
+}
+
+const parsePath = (path: string) => {
+  const pathParts = splitPath(path);
 
   const entities: string[] = [];
   const entityIds: number[] = [];
@@ -24,10 +30,6 @@ const parsePath = (path: string) => {
     }
   };
 
-  if (entities.length != entityIds.length) {
-    throw new Error(`An error occured trying to get an entity for path ${path}. Please check your path and try again.`);
-  }
-
   return {
     entities,
     entityIds
@@ -35,7 +37,7 @@ const parsePath = (path: string) => {
 }
 
 const getOne = async <T extends FakeEntity>(path: string): Promise<T> => {
-  const pathParts = path.split('/');
+  const pathParts = splitPath(path);
   const isGetSingle = pathParts.length % 2 === 0;
   if (isGetSingle === false) {
     throw new Error('get(path: string) only returns a single item by :id. E.g. /list/:id');
@@ -71,7 +73,7 @@ const getOne = async <T extends FakeEntity>(path: string): Promise<T> => {
 }
 
 const getMany = async <T extends FakeEntity>(path: string): Promise<T[]> => {
-  const pathParts = path.split('/');
+  const pathParts = splitPath(path);;
   const isGetMany = pathParts.length % 2 !== 0;
   if (isGetMany === false) {
     throw new Error('get(path: string) only returns an array of items E.g. /list or /list/:id/items');
@@ -112,7 +114,7 @@ const getMany = async <T extends FakeEntity>(path: string): Promise<T[]> => {
 }
 
 const post = async <T extends FakeEntity>(path: string, entity: T): Promise<T> => {
-  const pathParts = path.split('/');
+  const pathParts = splitPath(path);;
   const isUpdate = pathParts.length % 2 === 0;
 
   const { entities, entityIds } = parsePath(path);
@@ -160,7 +162,7 @@ const post = async <T extends FakeEntity>(path: string, entity: T): Promise<T> =
 }
 
 const deleteEntity = async <T extends FakeEntity>(path: string) => {
-  const pathParts = path.split('/');
+  const pathParts = splitPath(path);;
   const hasIdentifier = pathParts.length % 2 === 0;
   if (hasIdentifier === false) {
     throw new Error('delete(path: string) only allows for deleting a single item by :id. E.g. /list/:id');
